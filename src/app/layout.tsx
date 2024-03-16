@@ -1,4 +1,6 @@
 import "@/styles/globals.css";
+import { Coupon } from "@/components/Coupon";
+import { Header } from "@/components/Header";
 
 import { Inter } from "next/font/google";
 
@@ -20,7 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>{children}</body>
+      <body className={`font-sans ${inter.variable}`}>
+        <Header />
+        <Coupon />
+        <section className="flex items-center justify-center py-10">
+          {children}
+        </section>
+      </body>
     </html>
   );
 }
