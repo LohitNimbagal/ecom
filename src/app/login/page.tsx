@@ -1,7 +1,7 @@
 "use client"
 
 import { z } from "zod"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -18,7 +18,6 @@ import { Input } from "@/components/ui/input"
 const formSchema = z.object({
     email: z.string().email(), // Ensure the email is in a valid email format
     password: z.string().min(8), // Ensure the password is at least 8 characters long
-
 })
 
 

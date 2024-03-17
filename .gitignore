@@ -40,3 +40,8 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+src/app/lib/data.ts
+src/app/api/blogs/[id]/route.ts
+src/app/api/blogs/route.ts
+
+

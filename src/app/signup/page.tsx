@@ -1,7 +1,7 @@
 "use client"
 
 import { z } from "zod"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
