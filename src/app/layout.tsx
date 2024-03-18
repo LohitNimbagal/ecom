@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={`font-sans ${inter.variable}`}>
         <Header />
         <Coupon />
-        <section className="flex items-center justify-center py-10">
+        <section className="flex items-center justify-center py-10 px-[40px]">
           {children}
         </section>
       </body>

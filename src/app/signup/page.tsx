@@ -57,7 +57,7 @@ export default function page() {
                     <CardTitle>Create your account</CardTitle>
                 </CardHeader>
 
-                <CardContent className="px-[60px]">
+                <CardContent>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                             <FormField
