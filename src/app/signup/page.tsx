@@ -14,6 +14,9 @@ import {
     FormLabel,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 
 const formSchema = z.object({
     username: z.string().min(2).max(50),
@@ -23,6 +26,8 @@ const formSchema = z.object({
 })
 
 export default function page() {
+
+    const router = useRouter()
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
@@ -35,10 +40,14 @@ export default function page() {
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+            const response = await axios.post("api/users/signup", values)
+            console.log(response.data);
+            router.push("/login")
+        } catch (error: any) {
+            console.log(error.message);
+        }
     }
 
     return (
@@ -93,7 +102,7 @@ export default function page() {
                 </CardContent>
 
                 <CardFooter className='flex-col gap-3'>
-                    <p>Have an Account? LOGIN</p>
+                    <p>Have an Account? <Link href={"/login"}>LOGIN</Link></p>
                 </CardFooter>
             </Card>
         </div>
