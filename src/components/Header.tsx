@@ -29,7 +29,7 @@ export const Header = () => {
                         return <li key={item}>{item}</li>
                     })}
                     <li>
-                        <Button onClick={logout} className=''>Logout</Button>
+                        <p onClick={logout} className='hover:cursor-pointer'>Logout</p>
                     </li>
                 </ul>
             </section>

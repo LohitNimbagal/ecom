@@ -72,8 +72,9 @@ export default function HomePage() {
               {categories.map((cat) => (
                 <li key={cat.name} className="flex items-center gap-3">
                   <Checkbox id={cat} 
-                  checked={field.value}
-                  onCheckedChange={field.onChange}/>
+                  // checked={field.value}
+                  // onCheckedChange={field.onChange}
+                  />
                   <label
                     htmlFor={cat.name}
                     className="text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
