@@ -38,7 +38,7 @@ export default function HomePage() {
     const getCategories = async () => {
       try {
         const response = await axios.post("api/users/category/all", { pageNumber: pageNumber })
-        console.log(response.data.categories);
+        console.log(response.data);
         setCategories(response.data.categories)
       } catch (error: any) {
         console.log(error.message);
@@ -67,11 +67,13 @@ export default function HomePage() {
 
           <CardContent>
             <ul className="space-y-5">
-              <p>Save my Interests!</p>
+              <p className="text-lg">Save my Interests!</p>
 
               {categories.map((cat) => (
                 <li key={cat.name} className="flex items-center gap-3">
-                  <Checkbox id={cat} />
+                  <Checkbox id={cat} 
+                  checked={field.value}
+                  onCheckedChange={field.onChange}/>
                   <label
                     htmlFor={cat.name}
                     className="text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -79,34 +81,41 @@ export default function HomePage() {
                     {cat.name}
                   </label>
                 </li>
-              ))
-              }
+              ))}
+
             </ul>
           </CardContent>
 
           <CardFooter className='flex-col gap-3'>
             <Pagination>
               <PaginationContent>
+                
                 <PaginationItem>
                   <PaginationPrevious href="#" />
                 </PaginationItem>
+
                 <PaginationItem>
                   <PaginationLink href="#">1</PaginationLink>
                 </PaginationItem>
+
                 <PaginationItem>
                   <PaginationLink href="#" isActive>
                     2
                   </PaginationLink>
                 </PaginationItem>
+
                 <PaginationItem>
                   <PaginationLink href="#">3</PaginationLink>
                 </PaginationItem>
+
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
+
                 <PaginationItem>
                   <PaginationNext href="#" />
                 </PaginationItem>
+
               </PaginationContent>
             </Pagination>
           </CardFooter>
