@@ -41,7 +41,6 @@ export default function page() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             const response = await axios.post("api/users/login", values)
-            console.log(response.data);
             router.push("/")
         } catch (error: any) {
             console.log(error.message);
