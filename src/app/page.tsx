@@ -1,25 +1,14 @@
 "use client"
 
-import { useEffect, useState } from "react";
 import { z } from "zod"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import React from 'react'
+import axios from "axios"
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import axios from "axios"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
+import { PaginationSection } from "@/components/PaginationSection";
 
 
 const formSchema = z.object({
@@ -31,7 +20,6 @@ const formSchema = z.object({
 export default function HomePage() {
 
   const [categories, setCategories] = useState([])
-  const router = useRouter()
   const [pageNumber, setPageNumber] = useState(1)
   const [data, setData] = useState(null)
 
@@ -56,22 +44,6 @@ export default function HomePage() {
       password: "",
     },
   })
-
-  const hangePageClick = () => {
-
-  }
-
-  const handelPrePage = () => {
-    if (data.pageNumber >= 1) {
-      setPageNumber(prev => prev - 1)
-    }
-  }
-
-  const handelNextPage = () => {
-    if (data.pageNumber <= data.totalPages) {
-      setPageNumber(prev => prev + 1)
-    }
-  }
 
   return (
     <>
@@ -106,45 +78,7 @@ export default function HomePage() {
           </CardContent>
 
           <CardFooter className='flex-col gap-3'>
-            <Pagination>
-              <PaginationContent>
-
-                <PaginationItem>
-                  <PaginationPrevious onClick={handelPrePage} />
-                </PaginationItem>
-
-                {pageNumber === 1 ?
-                  null
-                  :
-                  <PaginationItem>
-                    <PaginationLink onClick={hangePageClick}>{pageNumber - 1}</PaginationLink>
-                  </PaginationItem>
-                }
-
-                <PaginationItem>
-                  <PaginationLink isActive>
-                    {pageNumber}
-                  </PaginationLink>
-                </PaginationItem>
-
-                {pageNumber === data?.totalPages ?
-                  null
-                  :
-                  <PaginationItem>
-                    <PaginationLink>{pageNumber + 1}</PaginationLink>
-                  </PaginationItem>
-                }
-
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-
-                <PaginationItem>
-                  <PaginationNext onClick={handelNextPage} />
-                </PaginationItem>
-
-              </PaginationContent>
-            </Pagination>
+            <PaginationSection pageNumber={pageNumber} setPageNumber={setPageNumber} data={data} />
           </CardFooter>
         </Card>
       </div>

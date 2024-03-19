@@ -91,6 +91,40 @@ const PaginationNext = ({
 )
 PaginationNext.displayName = "PaginationNext"
 
+const PaginationEnd = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to next page"
+    size="default"
+    className={cn("pr-2.5", className)}
+    {...props}
+  >
+    {/* <span>End</span> */}
+    <ChevronRight className="h-4 w-4" />
+    <ChevronRight className="h-4 w-4" />
+  </PaginationLink>
+)
+PaginationEnd.displayName = "PaginationEnd"
+
+const PaginationStart = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to next page"
+    size="default"
+    className={cn(" pr-2.5", className)}
+    {...props}
+  >
+    <ChevronLeft className="h-4 w-4" />
+    <ChevronLeft className="h-4 w-4" />
+    {/* <span>Start</span> */}
+  </PaginationLink>
+)
+PaginationStart.displayName = "PaginationStart"
+
 const PaginationEllipsis = ({
   className,
   ...props
@@ -114,4 +148,6 @@ export {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationEnd,
+  PaginationStart
 }
