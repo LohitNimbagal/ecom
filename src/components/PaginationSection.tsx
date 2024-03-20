@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
     Pagination,
     PaginationContent,
@@ -11,13 +11,32 @@ import {
     PaginationStart,
 } from "@/components/ui/pagination"
 
-export const PaginationSection = ({pageNumber, setPageNumber, data}) => {
+interface Category {
+  id: number;
+  name: string;
+  _id: string;
+  // Add other properties if present
+}
+
+interface ResponseData {
+  message: string;
+  totalPages: number;
+  categories: Category[];
+  // Add other properties if present
+}
+interface Props {
+    pageNumber: number;
+    setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+    data: ResponseData;
+  }
+
+export const PaginationSection: React.FC <Props> = ({pageNumber, setPageNumber, data}) => {
 
     // const {pageNumber, setPageNumber, data} = props
 
-    const hangePageClick = () => {
+    // const hangePageClick = () => {
 
-    }
+    // }
 
     const handelPrePage = () => {
         if (pageNumber > 1) {
@@ -53,7 +72,7 @@ export const PaginationSection = ({pageNumber, setPageNumber, data}) => {
                     null
                     :
                     <PaginationItem>
-                        <PaginationLink onClick={hangePageClick}>{pageNumber - 1}</PaginationLink>
+                        <PaginationLink>{pageNumber - 1}</PaginationLink>
                     </PaginationItem>
                 }
 

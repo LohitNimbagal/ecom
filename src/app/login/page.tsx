@@ -24,7 +24,7 @@ const formSchema = z.object({
 })
 
 
-export default function page() {
+export default function Page() {
 
     const router = useRouter()
 
@@ -40,10 +40,10 @@ export default function page() {
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            const response = await axios.post("api/users/login", values)
+            await axios.post("api/users/login", values)
             router.push("/")
-        } catch (error: any) {
-            console.log(error.message);
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -90,7 +90,7 @@ export default function page() {
                 </CardContent>
 
                 <CardFooter className='flex-col gap-3'>
-                    <p>Don't have an Account? <Link href={"/signup"}>SIGN UP</Link></p>
+                    <p>Don&apos;t have an Account? <Link href={"/signup"}>SIGN UP</Link></p>
                 </CardFooter>
             </Card>
         </div>

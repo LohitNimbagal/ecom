@@ -16,12 +16,29 @@ const formSchema = z.object({
   password: z.string().min(8), // Ensure the password is at least 8 characters long
 })
 
+interface Category {
+  id: number;
+  name: string;
+  _id: string;
+  // Add other properties if present
+}
+
+interface ResponseData {
+  message: string;
+  totalPages: number;
+  categories: Category[];
+  // Add other properties if present
+}
 
 export default function HomePage() {
 
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [pageNumber, setPageNumber] = useState(1)
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<ResponseData>({
+    message: "" ,
+    totalPages: 17,
+    categories: [],
+  })
 
   useEffect(() => {
     const getCategories = async () => {
@@ -30,8 +47,8 @@ export default function HomePage() {
         console.log(response.data);
         setData(response.data);
         setCategories(response.data.categories)
-      } catch (error: any) {
-        console.log(error.message);
+      } catch (error) {
+        console.log(error);
       }
     }
     getCategories()
@@ -59,9 +76,9 @@ export default function HomePage() {
             <ul className="space-y-5">
               <p className="text-lg">Save my Interests!</p>
 
-              {categories.map((cat) => (
+              {categories.map((cat: Category) => (
                 <li key={cat.name} className="flex items-center gap-3">
-                  <Checkbox id={cat}
+                  <Checkbox id={cat.name}
                   // checked={field.value}
                   // onCheckedChange={field.onChange}
                   />

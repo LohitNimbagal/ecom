@@ -1,7 +1,6 @@
 "use client"
 
 import React from 'react'
-import { Button } from './ui/button'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
@@ -16,8 +15,8 @@ export const Header = () => {
         try {
             await axios.get('api/users/logout')
             router.push("/")
-        } catch (error: any) {
-            console.log(error.message);
+        } catch (error) {
+            console.log(error);
         }
     }
 

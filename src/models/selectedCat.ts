@@ -13,6 +13,6 @@ const selectedCatSchema = new mongoose.Schema({
     
 })
 
-const SelectedCategory = mongoose.models.selectedCat || mongoose.model("selectedCat", selectedCatSchema);
+const SelectedCategory = mongoose.models.selectedCat ?? mongoose.model("selectedCat", selectedCatSchema);
 
 export default SelectedCategory;

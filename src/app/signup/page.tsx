@@ -25,7 +25,7 @@ const formSchema = z.object({
 
 })
 
-export default function page() {
+export default function Page() {
 
     const router = useRouter()
 
@@ -45,8 +45,8 @@ export default function page() {
             const response = await axios.post("api/users/signup", values)
             console.log(response.data);
             router.push("/login")
-        } catch (error: any) {
-            console.log(error.message);
+        } catch (error) {
+            console.log(error);
         }
     }
 

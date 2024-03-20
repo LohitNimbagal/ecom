@@ -15,6 +15,6 @@ const CategorySchema = new mongoose.Schema({
 });
 
 // Create a model based on the schema
-const Category = mongoose.models.category || mongoose.model('category', CategorySchema);
+const Category = mongoose.models.category ?? mongoose.model('category', CategorySchema);
 
 export default Category;
