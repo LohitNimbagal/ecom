@@ -33,6 +33,7 @@ export default function HomePage() {
   const [selectedCategories, setSelectedCategories] = useState<CatType[]>([])
   const [newSelCat, setNewSelCat] = useState<CatType[]>(selectedCategories)
   const [pageNumber, setPageNumber] = useState(1)
+  const [user, setUser] = useState(null)
   const [data, setData] = useState<ResponseData>({
     message: "",
     totalPages: 17,
@@ -57,8 +58,13 @@ export default function HomePage() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.post("api/users/category/selected", { _id: "65f82aa84c318052b76fab64" });
-        setNewSelCat(response.data.userCat.categories)
+        const res = await axios.get('/api/users/getUser')
+        setUser(res.data.data);
+
+        if (user) {
+          const response = await axios.post("api/users/category/selected", { _id: user?._id });
+          setSelectedCategories(response.data.userCat.categories)
+        }
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -67,15 +73,17 @@ export default function HomePage() {
 
   useEffect(() => {
     console.log(newSelCat);
-    (async () => {
+    if (user) {
+      (async () => {
       try {
-        const response = await axios.put<ResponseData>("api/users/category/selected", { categories: newSelCat ,_id: "65f82aa84c318052b76fab64" });
+        const response = await axios.put<ResponseData>("api/users/category/selected", { categories: newSelCat, _id: user?._id });
         console.log(response);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     })()
-  }, [newSelCat])
+    }
+  }, [setNewSelCat])
 
   const handleCheck = (cat: string) => {
     if (newSelCat.includes(cat)) {
