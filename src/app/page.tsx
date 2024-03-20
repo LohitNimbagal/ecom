@@ -35,23 +35,24 @@ export default function HomePage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [pageNumber, setPageNumber] = useState(1)
   const [data, setData] = useState<ResponseData>({
-    message: "" ,
+    message: "",
     totalPages: 17,
     categories: [],
   })
 
   useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const response = await axios.post("api/users/category/all", { pageNumber: pageNumber })
-        console.log(response.data);
-        setData(response.data);
-        setCategories(response.data.categories)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getCategories()
+    const getCategories = () => {
+      return axios.post<ResponseData>("api/users/category/all", { pageNumber })
+        .then(response => {
+          setData(response.data);
+          setCategories(response.data.categories);
+        })
+        .catch(error => {
+          console.error("Error fetching categories:", error);
+        });
+    };
+
+    getCategories();
   }, [pageNumber])
 
   const form = useForm<z.infer<typeof formSchema>>({

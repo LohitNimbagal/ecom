@@ -22,7 +22,6 @@ const formSchema = z.object({
     username: z.string().min(2).max(50),
     email: z.string().email(), // Ensure the email is in a valid email format
     password: z.string().min(8), // Ensure the password is at least 8 characters long
-
 })
 
 export default function Page() {

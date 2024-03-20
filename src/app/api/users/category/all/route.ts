@@ -1,4 +1,5 @@
 // @ts-nocheck
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { connect } from '@/dbConfig/dbConfig'
 import { NextRequest, NextResponse } from "next/server";
@@ -12,8 +13,8 @@ interface RequestBody {
 
 export async function POST(request: NextRequest) {
 
-    const requestBody: RequestBody = await request.json();
-    const { pageNumber } = requestBody;
+    const { pageNumber }: RequestBody = await request.json();
+    // const { pageNumber } = requestBody;
 
     const pageSize = 6;
     const skip = ((pageNumber || 1) - 1) * pageSize;
