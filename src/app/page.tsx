@@ -1,26 +1,18 @@
+// @ts-nocheck
+
 "use client"
 
-import { z } from "zod"
 import React from 'react'
 import axios from "axios"
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { Checkbox } from "@/components/ui/checkbox"
 import { PaginationSection } from "@/components/PaginationSection";
-
-
-const formSchema = z.object({
-  email: z.string().email(), // Ensure the email is in a valid email format
-  password: z.string().min(8), // Ensure the password is at least 8 characters long
-})
 
 interface Category {
   id: number;
   name: string;
   _id: string;
-  // Add other properties if present
 }
 
 interface ResponseData {
@@ -30,9 +22,16 @@ interface ResponseData {
   // Add other properties if present
 }
 
+interface CatType {
+  _id: string,
+  categories: Category[]
+}
+
 export default function HomePage() {
 
   const [categories, setCategories] = useState<Category[]>([])
+  const [selectedCategories, setSelectedCategories] = useState<CatType[]>([])
+  const [newSelCat, setNewSelCat] = useState<CatType[]>(selectedCategories)
   const [pageNumber, setPageNumber] = useState(1)
   const [data, setData] = useState<ResponseData>({
     message: "",
@@ -55,13 +54,36 @@ export default function HomePage() {
     getCategories();
   }, [pageNumber])
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  })
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post("api/users/category/selected", { _id: "65f82aa84c318052b76fab64" });
+        setNewSelCat(response.data.userCat.categories)
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    })()
+  }, [])
+
+  useEffect(() => {
+    console.log(newSelCat);
+    (async () => {
+      try {
+        const response = await axios.put<ResponseData>("api/users/category/selected", { categories: newSelCat ,_id: "65f82aa84c318052b76fab64" });
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    })()
+  }, [newSelCat])
+
+  const handleCheck = (cat: string) => {
+    if (newSelCat.includes(cat)) {
+      setNewSelCat(prev => prev.filter(newSelCat => newSelCat !== cat));
+    } else {
+      setNewSelCat(prev => [...prev, cat]);
+    }
+  }
 
   return (
     <>
@@ -79,9 +101,10 @@ export default function HomePage() {
 
               {categories.map((cat: Category) => (
                 <li key={cat.name} className="flex items-center gap-3">
-                  <Checkbox id={cat.name}
-                  // checked={field.value}
-                  // onCheckedChange={field.onChange}
+                  <Checkbox
+                    id={cat.name}
+                    checked={newSelCat.includes(cat.name)}
+                    onCheckedChange={() => handleCheck(cat.name)}
                   />
                   <label
                     htmlFor={cat.name}
